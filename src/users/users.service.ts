@@ -51,4 +51,18 @@ export class UsersService {
   async remove(id: string) {
     return this.userRepository.delete(id);
   }
+
+  async updateRole(userId: string, role_id: number) {
+  const user = await this.userRepository.findOne({
+    where: { user_id: userId },
+  });
+
+  if (!user) {
+    throw new Error('User not found');
+  }
+
+  user.role_id = role_id;
+
+  return this.userRepository.save(user);
+}
 }

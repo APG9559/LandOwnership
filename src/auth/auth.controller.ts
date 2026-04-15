@@ -18,4 +18,9 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
+  @Post('create-admin')
+  createAdmin() {
+    return this.authService.createAdminIfNotExists();
+  }
+  
 }

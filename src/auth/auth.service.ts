@@ -46,11 +46,35 @@ async register(dto: RegisterDto) {
   }
 
 
-  const user = await this.usersService.create(dto);
+ const user = await this.usersService.create({
+    ...dto,
+    role_id: 6, // PUBLIC USER (or lowest role)
+  });
 
   return {
     message: 'User registered successfully',
     user,
   };
+}
+
+async createAdminIfNotExists() {
+  const existingAdmin = await this.usersService.findByEmail('admin@system.com');
+
+  if (existingAdmin) {
+    console.log('Admin already exists');
+    return;
+  }
+
+  const hashedPassword = await bcrypt.hash('admin123', 10);
+
+  await this.usersService.create({
+    username: 'admin',
+    email: 'admin@system.com',
+    password: hashedPassword,
+    full_name: 'System Admin',
+    role_id: 1, //  ADMIN
+  });
+
+  console.log('Admin user created');
 }
 }
