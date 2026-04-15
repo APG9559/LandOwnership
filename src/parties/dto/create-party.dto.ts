@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export class CreatePartyDto {
   party_type: string;
   first_name?: string;

@@ -30,7 +30,7 @@ export class AuthService {
     const payload = {
       sub: user.user_id,
       email: user.email,
-      role: user.role.role_code
+      role: user.role_id // IMPORTANT: Ensure role_id is properly loaded as an object with role_id property
     };
 
     return {

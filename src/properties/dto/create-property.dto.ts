@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export class CreatePropertyDto {
   village_id: number;
   property_ref_code: string;

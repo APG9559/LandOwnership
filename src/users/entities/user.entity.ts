@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 
 @Entity('users')
@@ -43,7 +43,8 @@ export class User {
 
   @Column({ type: 'timestamptz', default: () => 'NOW()' })
   updated_at: Date;
+
+  @ManyToOne(() => Role)
+  @JoinColumn({ name: 'role_id' })
+  role: Role;
 }
-@ManyToOne(() => Role)
-@JoinColumn({ name: 'role_id' })
-role: Role;
