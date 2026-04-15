@@ -100,4 +100,10 @@ export class OwnershipService {
 
     return this.ownershipRepo.save(newOwnership);
   }
+  async findCurrentOwnersByProperty(propertyId: string) {
+  return this.ownershipRepo.find({
+    where: { property_id: propertyId, is_current_owner: true },
+    relations: ['party'],
+  });
+}
 }

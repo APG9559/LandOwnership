@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { OwnershipService } from './ownership.service';
 // import { CreateOwnershipDto } from './dto/create-ownership.dto';
 // import { UpdateOwnershipDto } from './dto/update-ownership.dto';
@@ -32,4 +32,9 @@ export class OwnershipController {
 //   remove(@Param('id') id: string) {
 //     return this.ownershipService.remove(+id);
 //   }
+
+  @Get('by-property/:propertyId')
+  async getOwnersByProperty(@Param('propertyId') propertyId: string) {
+    return this.ownershipService.findCurrentOwnersByProperty(propertyId);
+  }
 }
