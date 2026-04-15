@@ -59,4 +59,45 @@ export class PropertiesService {
   async remove(id: string) {
     return this.propertyRepo.delete(id);
   }
+
+    async getSystemOverview() {
+    // Map land_type_id to type name (should match your DB mapping)
+    const typeMap = {
+      1: 'Residential',
+      2: 'Commercial',
+      3: 'Agricultural',
+      4: 'Industrial',
+      5: 'Other',
+    };
+
+    // Get counts for each type
+    const qb = this.propertyRepo.createQueryBuilder('property');
+    const counts = await qb
+      .select('property.land_type_id', 'land_type_id')
+      .addSelect('COUNT(*)', 'count')
+      .groupBy('property.land_type_id')
+      .getRawMany();
+
+    // Calculate total
+    const total = counts.reduce((sum, c) => sum + Number(c.count), 0);
+
+    // Format for frontend
+    const result = {
+      total,
+      breakdown: [
+        { type: 'Residential', count: 0 },
+        { type: 'Commercial', count: 0 },
+        { type: 'Agricultural', count: 0 },
+        { type: 'Industrial', count: 0 },
+        { type: 'Other', count: 0 },
+      ],
+    };
+    counts.forEach(c => {
+      const idx = Object.keys(typeMap).indexOf(String(c.land_type_id));
+      if (idx !== -1) {
+        result.breakdown[idx].count = Number(c.count);
+      }
+    });
+    return result;
+  }
 }

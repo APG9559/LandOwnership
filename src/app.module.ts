@@ -14,6 +14,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RolesModule } from './roles/roles.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -30,11 +31,13 @@ import { RolesModule } from './roles/roles.module';
 
         autoLoadEntities: true,
 
-        synchronize: true, // ONLY for dev
+        synchronize: false, 
+         migrationsRun: true, // ← auto-runs pending migrations on startup
+        migrations: [__dirname + '/migrations/*.js'],
       }),
     }),
 
-    AuthModule, UsersModule, DocumentsModule, EncumbrancesModule, OwnershipModule, DeedPartiesModule, DeedsModule, PartiesModule, PropertiesModule, RolesModule],
+    AuthModule, UsersModule, DocumentsModule, EncumbrancesModule, OwnershipModule, DeedPartiesModule, DeedsModule, PartiesModule, PropertiesModule, RolesModule, DashboardModule],
   controllers: [AppController],
   providers: [AppService],
 })

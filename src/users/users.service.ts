@@ -15,6 +15,7 @@ export class UsersService {
   ) {}
 
   async create(dto: CreateUserDto) {
+    console.log("I AM REACHED USER SERVICE")
     const existing = await this.userRepository.findOne({
       where: [{ email: dto.email }, { username: dto.username }],
     });

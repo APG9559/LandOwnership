@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateAuthDto } from './login.dto';
-
-export class UpdateAuthDto extends PartialType(CreateAuthDto) {}
+/* eslint-disable prettier/prettier */
+// import { PartialType } from '@nestjs/mapped-types';
+// import { CreateAuthDto } from './login.dto';
+// export class UpdateAuthDto extends PartialType(CreateAuthDto) {}

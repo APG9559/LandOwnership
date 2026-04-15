@@ -63,4 +63,10 @@ export class PropertiesController {
   remove(@Param('id') id: string) {
     return this.propertiesService.remove(id);
   }
+  
+  @UseGuards(JwtAuthGuard)
+  @Get('overview')
+  async getSystemOverview() {
+    return this.propertiesService.getSystemOverview();
+  }
 }
